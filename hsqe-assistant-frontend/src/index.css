@@ -1,0 +1,44 @@
+/* src/index.css
+   Base44-like neutral globals (NO logic changes)
+   - Remove Vite template overrides (dark scheme, body flex center, global button styles)
+*/
+
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+
+  /* Base44-ish app background */
+  background: #f8fafc; /* slate-50 */
+  color: #0f172a;      /* slate-900 */
+}
+
+/* Keep links neutral (components can override) */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/*
+  IMPORTANT:
+  Do NOT style global button/input here.
+  Your shadcn/ui Button/Input components should control appearance.
+*/
