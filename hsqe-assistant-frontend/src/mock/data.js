@@ -67,29 +67,28 @@ export const mockUsers = [
 // SETTINGS (editable via Settings.jsx)
 // --------------------
 export const mockSettings = {
-  vessels: ["W-ACE", "W-LUNA", "W-EMERALD", "W-LION", "W-JADE", "W-ARCTURUS", "W-MAYFAIR"],
+  vessels: ["W-Ace", "W-Arcturus", "W-Emerald", "W-Jade", "W-Lion", "W-Luna", "W-Malvina", "W-Mary", "W-Mayfair", "W-Nautilus", "W-Original", "W-Oslo", "W-Pacific", "W-Pearl", "W-Sapphire", "W-Sky", "W-Smash", "W-Star", "W-Eagle", "W-Galaxy", "W-Raptor"],
 
   users: mockUsers.map(({ email, full_name }) => ({ email, full_name })),
 
-  certificateTypes: ["Safety", "Class", "Renewal", "Initial", "Intermediate", "Annual Test", "Annual Confirmation", "Other"],
+  certificateTypes: ["Annual Confirmation", "Annual Test", "ASI - Annual Safety Inspection", "Cyber Security Audit", "Initial", "Intermediate", "Internal Audit (ISM-ISPS-MLC combined)", "Navigational Audit", "Other", "Renewal", "Safety", "Class", "Vetting Inspection"],
 
   departments: ["Administration", "Accounting", "Management", "Chartering", "HSQE", "Legal", "Crew", "Supplies", "Technical", "Marine", "IT"],
 
   inspectionTypes: ["PSC", "Flag", "Vetting"],
 
-  flagStates: ["Liberia", "Greece", "Panama", "Marshall Islands", "Malta", "Cyprus"],
+  flagStates: ["Liberia"],
 
   pscAuthorities: [
-    "Paris MoU",
-    "Tokyo MoU",
-    "Amsa",
-    "USCG",
-    "Black Sea MoU",
-    "Mediterranean MoU",
-    "Indian Ocean MoU",
-    "Riyadh MoU",
     "Abuja MoU",
+    "Black Sea MoU",
     "Caribbean MoU",
+    "Indian Ocean MoU",
+    "Mediterranean MoU",
+    "Paris MoU",
+    "Riyadh MoU",
+    "Tokyo MoU",
+    "USCG",
     "Viña del Mar MoU",
   ],
 
@@ -111,7 +110,10 @@ export const mockSettings = {
     "13": "Propulsion & Auxiliary Machinery",
     "14": "Pollution Prevention",
     "15": "ISM",
+    "16": "Crew & Accommodation",
+    "17": "Operational Requirements",
     "18": "Labour Conditions",
+    "19": "Security (ISPS)",
     "99": "Other",
   },
 
@@ -123,16 +125,18 @@ export const mockSettings = {
     "05": "Pollution Prevention & Control",
     "06": "Ship’s Structure",
     "7A": "Fuel Management (Oil)",
-    "8A": "Cargo Ops – Solid Bulk (non-grain)",
-    "8B": "Cargo Ops – Grain",
+    "8A": "Cargo Operation – Solid Bulk other than grain",
+    "8B": "Cargo Operation – Bunk Grain",
     "9A": "Hatch Covers & Lifting Appliances",
+    "9B": "Gantry Cranes",
     "10": "Mooring Operations",
     "11": "Radio & Communications",
     "12": "Security",
     "13": "Machinery Space",
-    "14": "General Appearance",
+    "14": "General Appearance – Hull & Superstructure",
     "15": "Health & Welfare of Seafarers",
-    "17": "Ship-to-Ship Operations",
+    "16": "Ice or Polar Water Operations",
+    "17": "Ship-to-Ship Operation",
   },
 };
 
