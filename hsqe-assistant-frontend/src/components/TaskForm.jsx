@@ -211,6 +211,7 @@ export default function TaskForm({
     e.preventDefault();
     const clean = {
       ...form,
+      assigned_to: form.assigned_to.length ? form.assigned_to[0] : null, // ← fix: send null if no one assigned
       visible_to_assignee: form.assigned_to.length ? !!form.visible_to_assignee : false,
     };
     onSave?.(clean);
