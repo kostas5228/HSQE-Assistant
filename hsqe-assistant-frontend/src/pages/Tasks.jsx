@@ -1630,74 +1630,23 @@ React.useEffect(() => {
     <div style={{ minHeight: "calc(100vh - 60px)", background: ui.pageBg }}>
       <div style={{ maxWidth: ui.maxW, margin: "0 auto", padding: 20, display: "grid", gap: 16 }}>
         {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
-          
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
+          <div style={{ border: `1px solid ${ui.border}`, borderRadius: 14, padding: 6, background: "white", display: "inline-flex", gap: 6, width: "fit-content" }}>
+            <button type="button" onClick={() => goSection("tasks")} style={{ padding: "8px 12px", borderRadius: 12, border: `1px solid ${section === "tasks" ? ui.border2 : "transparent"}`, background: section === "tasks" ? "#f8fafc" : "transparent", fontWeight: 950, cursor: "pointer", color: ui.text, display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <ListChecks size={16} /> Tasks
+            </button>
+            <button type="button" onClick={() => goSection("notes")} style={{ padding: "8px 12px", borderRadius: 12, border: `1px solid ${section === "notes" ? ui.border2 : "transparent"}`, background: section === "notes" ? "#f8fafc" : "transparent", fontWeight: 950, cursor: "pointer", color: ui.text, display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <StickyNote size={16} /> Notes
+            </button>
+          </div>
+
           {section === "tasks" ? (
-            <PrimaryButton onClick={() => setShowNew(true)}>
-              <Plus size={18} />
-              New Task
-            </PrimaryButton>
+            <PrimaryButton onClick={() => setShowNew(true)}><Plus size={18} /> New Task</PrimaryButton>
           ) : (
-            <PrimaryButton onClick={() => setShowNewNote(true)}>
-              <Plus size={18} />
-              New Note
-            </PrimaryButton>
+            <PrimaryButton onClick={() => setShowNewNote(true)}><Plus size={18} /> New Note</PrimaryButton>
           )}
         </div>
-
-        {/* Top tabs */}
-        <div
-          style={{
-            border: `1px solid ${ui.border}`,
-            borderRadius: 14,
-            padding: 6,
-            background: "white",
-            display: "inline-flex",
-            gap: 6,
-            width: "fit-content",
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => goSection("tasks")}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 12,
-              border: `1px solid ${section === "tasks" ? ui.border2 : "transparent"}`,
-              background: section === "tasks" ? "#f8fafc" : "transparent",
-              fontWeight: 950,
-              cursor: "pointer",
-              color: ui.text,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            <ListChecks size={16} />
-            Tasks
-          </button>
-
-          <button
-            type="button"
-            onClick={() => goSection("notes")}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 12,
-              border: `1px solid ${section === "notes" ? ui.border2 : "transparent"}`,
-              background: section === "notes" ? "#f8fafc" : "transparent",
-              fontWeight: 950,
-              cursor: "pointer",
-              color: ui.text,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            <StickyNote size={16} />
-            Notes
-          </button>
-        </div>
-
+          
         {/* SEARCH */}
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           <div style={{ position: "relative", width: "min(640px, 100%)" }}>
