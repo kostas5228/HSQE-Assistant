@@ -319,8 +319,8 @@ function RowSection({ id, title, subtitle, defaultOpen = true, children }) {
 
         <div
           style={{
-            width: 34,
-            height: 34,
+            width: 24,
+            height: 24,
             borderRadius: 10,
             border: "1px solid #e5e7eb",
             display: "grid",
