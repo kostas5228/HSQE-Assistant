@@ -2060,7 +2060,7 @@ export default function Inspections() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       {/* Top tabs */}
       <div style={topTabsWrap}>
         <button type="button" onClick={() => setMainTab("list")} style={topTabBtn(mainTab === "list")}>
