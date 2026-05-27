@@ -173,7 +173,7 @@ function Card({ title, icon: Icon, right, children, minHeight }) {
           alignItems: "center",
           justifyContent: "space-between",
           gap: 10,
-          marginBottom: (title || right) ? 10 : 0,
+          marginBottom: 10,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
