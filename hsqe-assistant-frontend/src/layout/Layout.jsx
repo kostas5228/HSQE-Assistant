@@ -37,16 +37,16 @@ const fired = new Set();
 function ReminderChecker() {
   React.useEffect(() => {
     if (!("Notification" in window)) return;
-    if (Notification.permission !== "granted") return;
 
-    const id = setInterval(() => {
+    function check() {
+      if (Notification.permission !== "granted") return;
       const now = new Date();
-      const notes = loadNotes();
 
+      const notes = loadNotes();
       notes.forEach((n) => {
         if (!n.reminder_at || fired.has(n.id)) return;
         const t = new Date(n.reminder_at);
-        if (Math.abs(now - t) < 60_000) {
+        if (Math.abs(now - t) < 90_000) {
           fired.add(n.id);
           new Notification("📝 HSQE Reminder", {
             body: n.title || "Note reminder",
@@ -54,10 +54,16 @@ function ReminderChecker() {
           });
         }
       });
-    }, 30_000);
+    }
 
+    // Τρέχει αμέσως + κάθε 30 δευτερόλεπτα
+    check();
+    const id = setInterval(check, 30_000);
     return () => clearInterval(id);
   }, []);
+
+  return null;
+}
 
   return null;
 }
