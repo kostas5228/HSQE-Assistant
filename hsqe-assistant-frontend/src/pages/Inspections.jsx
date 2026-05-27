@@ -2152,7 +2152,7 @@ export default function Inspections() {
       {/* ===================== LIST TAB ===================== */}
       {mainTab === "list" ? (
         <>
-          <Card title="Filters">
+          <Card>
             <div
               style={{
                 display: "flex",
