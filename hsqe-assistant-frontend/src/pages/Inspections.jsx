@@ -2088,9 +2088,6 @@ export default function Inspections() {
           <div style={{ fontSize: isMobile ? 26 : 34, fontWeight: 980, color: "#0f172a" }}>
             Inspections & Findings
           </div>
-          <div style={{ color: "#64748b", marginTop: 6, fontWeight: 800 }}>
-            Complete operational view of inspections, findings, and vettings.
-          </div>
         </div>
 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
