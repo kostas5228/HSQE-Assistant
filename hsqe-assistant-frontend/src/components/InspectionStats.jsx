@@ -1680,7 +1680,6 @@ export default function InspectionStats({
           <div data-pdf-block>
             <FrequencyByCode
               title="PSC • Deficiency frequency by code (first 2)"
-              subtitle='Finding Type = "Deficiency". Key = first 2 chars of "code". Mapped via Settings → pscCodeGroups. (99 included)'
               items={computed.psc.freqDef}
             />
           </div>
@@ -1871,7 +1870,6 @@ export default function InspectionStats({
           <div data-pdf-block>
             <FrequencyByCode
               title="Vetting • Finding frequency by code (first 2)"
-              subtitle='Finding Type = "Finding". Key = first 2 chars of "code". Mapped via Settings → vettingCodeGroups. (99 included)'
               items={computed.vetting.freqFinding}
             />
           </div>
