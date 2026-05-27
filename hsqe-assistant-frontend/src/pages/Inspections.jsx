@@ -2152,7 +2152,7 @@ export default function Inspections() {
       {/* ===================== LIST TAB ===================== */}
       {mainTab === "list" ? (
         <>
-          <Card title="Filters" subtitle="Search, date range, vessel and type filters.">
+          <Card title="Filters">
             <div
               style={{
                 display: "flex",
