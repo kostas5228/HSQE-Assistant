@@ -698,7 +698,7 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
   };
 
   return (
-    <div style={{ display: "grid", gap: 4, position: "relative" }}>
+    <div style={{ display: "grid", gap: 2, position: "relative" }}>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
         <div style={chkWrap}>
           <label style={filterItem(filters.certsDue, COLOR_CERT)}>
