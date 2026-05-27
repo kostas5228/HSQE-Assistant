@@ -1638,8 +1638,8 @@ function useMediaQuery(query) {
           </Card>
         </div>
       </RowSection>
-
-      <RowSection id="row_recent_reports_findings" title="Recent Activity" subtitle="Latest inspection reports and findings." defaultOpen={true}>
+      
+      <RowSection id="row_recent_reports_findings" title="Recent Activity" defaultOpen={true}>
         <div style={{ display: "grid", gridTemplateColumns: isSmallScreen ? "1fr" : "1fr 1fr", gap: 14 }}>
           <Card
             title="Recent Inspection Reports"
