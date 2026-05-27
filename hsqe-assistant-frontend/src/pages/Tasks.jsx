@@ -1633,7 +1633,6 @@ React.useEffect(() => {
         <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
           <div style={{ minWidth: 0 }}>
             <div style={{ fontSize: 32, fontWeight: 980, color: ui.text }}>Tasks</div>
-            <div style={{ color: ui.muted, marginTop: 6, fontWeight: 800 }}>{from === "calendar" ? "Return from Calendar" : "My tasks"}</div>
           </div>
 
           {section === "tasks" ? (
