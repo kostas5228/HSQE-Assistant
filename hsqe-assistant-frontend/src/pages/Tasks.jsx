@@ -1631,10 +1631,7 @@ React.useEffect(() => {
       <div style={{ maxWidth: ui.maxW, margin: "0 auto", padding: 20, display: "grid", gap: 16 }}>
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
-          <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: 32, fontWeight: 980, color: ui.text }}>Tasks</div>
-          </div>
-
+          
           {section === "tasks" ? (
             <PrimaryButton onClick={() => setShowNew(true)}>
               <Plus size={18} />
