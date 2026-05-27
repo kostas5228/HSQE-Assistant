@@ -302,7 +302,7 @@ function RowSection({ id, title, subtitle, defaultOpen = true, children }) {
           border: "none",
           background: "#ffffff",
           cursor: "pointer",
-          padding: "12px 14px",
+          padding: "7px 14px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
