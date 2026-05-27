@@ -2521,7 +2521,7 @@ export default function Inspections() {
       {/* ===================== REPORTS TAB ===================== */}
       {mainTab === "reports" ? (
         <>
-          <Card title="Report Filters">
+          <Card>
             <div
               style={{
                 display: "flex",
