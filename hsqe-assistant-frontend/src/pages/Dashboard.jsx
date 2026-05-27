@@ -1332,7 +1332,6 @@ function useMediaQuery(query) {
       <RowSection
         id="row_calendar"
         title="Calendar"
-        subtitle="Work-week view (09:00–18:00) with scroll for the rest of the day."
         defaultOpen={true}
       >
         <Card title="Calendar" icon={CalendarIcon}>
@@ -1345,7 +1344,6 @@ function useMediaQuery(query) {
       <RowSection
         id="row_agenda_myday"
         title="Agenda & My Day"
-        subtitle="Daily focus: pinned notes, reminders, and today’s due."
         defaultOpen={true}
       >
         <div style={{ display: "grid", gridTemplateColumns: isSmallScreen ? "1fr" : "1.2fr 1fr", gap: 14 }}>
@@ -1426,7 +1424,7 @@ function useMediaQuery(query) {
         </div>
       </RowSection>
 
-      <RowSection id="row_due_overdue" title="Due & Overdue" subtitle="Short-term risk: next 7 days and past due." defaultOpen={true}>
+      <RowSection id="row_due_overdue" title="Due & Overdue" defaultOpen={true}>
         <div style={{ display: "grid", gridTemplateColumns: isSmallScreen ? "1fr" : "1fr 1fr", gap: 14 }}>
           <Card
             title="Due in 7 days"
@@ -1534,7 +1532,7 @@ function useMediaQuery(query) {
         </div>
       </RowSection>
 
-      <RowSection id="row_upcoming_detentions" title="Upcoming & Detentions" subtitle="30-day expiries and YTD detentions." defaultOpen={true}>
+      <RowSection id="row_upcoming_detentions" title="Upcoming & Detentions" defaultOpen={true}>
         <div style={{ display: "grid", gridTemplateColumns: isSmallScreen ? "1fr" : "1fr 1fr", gap: 14 }}>
           <Card
             title="Upcoming Expiries – 30 days"
