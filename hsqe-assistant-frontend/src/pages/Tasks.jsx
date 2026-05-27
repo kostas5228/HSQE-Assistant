@@ -1628,7 +1628,7 @@ React.useEffect(() => {
 
   return (
     <div style={{ minHeight: "calc(100vh - 60px)", background: ui.pageBg }}>
-      <div style={{ maxWidth: ui.maxW, margin: "0 auto", padding: 24, display: "grid", gap: 16 }}>
+      <div style={{ maxWidth: ui.maxW, margin: "0 auto", padding: 20, display: "grid", gap: 16 }}>
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
           <div style={{ minWidth: 0 }}>
