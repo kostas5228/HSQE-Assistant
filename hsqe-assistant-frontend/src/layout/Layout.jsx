@@ -22,51 +22,6 @@ import {
   X,
 } from "lucide-react";
 
-const NOTES_KEY = "hsqe_notes_v1";
-
-function loadNotes() {
-  try {
-    const raw = localStorage.getItem(NOTES_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
-    return Array.isArray(arr) ? arr : [];
-  } catch { return []; }
-}
-
-const fired = new Set();
-
-function ReminderChecker() {
-  React.useEffect(() => {
-    if (!("Notification" in window)) return;
-
-    function check() {
-      if (Notification.permission !== "granted") return;
-      const now = new Date();
-
-      const notes = loadNotes();
-      notes.forEach((n) => {
-        if (!n.reminder_at || fired.has(n.id)) return;
-        const t = new Date(n.reminder_at);
-        if (Math.abs(now - t) < 90_000) {
-          fired.add(n.id);
-          new Notification("📝 HSQE Reminder", {
-            body: n.title || "Note reminder",
-            icon: "/favicon.ico",
-          });
-        }
-      });
-    }
-
-    // Τρέχει αμέσως + κάθε 30 δευτερόλεπτα
-    check();
-    const id = setInterval(check, 30_000);
-    return () => clearInterval(id);
-  }, []);
-
-  return null;
-}
-
-  return null;
-}
 /* Simple media query hook */
 function useMediaQuery(query) {
   const get = React.useCallback(() => {
@@ -106,13 +61,6 @@ export default function Layout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const gs = useGlobalSearch();
-  /* ─── Reminder Notifications ─── */
-  React.useEffect(() => {
-    if (!("Notification" in window)) return;
-    if (Notification.permission === "default") {
-      Notification.requestPermission();
-    }
-  }, []);
 
   /* Keyboard shortcut: Ctrl/Cmd + K */
   React.useEffect(() => {
@@ -535,8 +483,7 @@ export default function Layout() {
           </div>
         </div>
       </footer>
-      
-      <ReminderChecker />
+
       <GlobalSearchModal />
     </div>
   );
