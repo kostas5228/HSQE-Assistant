@@ -71,7 +71,7 @@ export const mockSettings = {
 
   users: mockUsers.map(({ email, full_name }) => ({ email, full_name })),
 
-  certificateTypes: ["Annual Confirmation", "Annual Test", "ASI - Annual Safety Inspection", "Cyber Security Audit", "Initial", "Intermediate", "Internal Audit (ISM-ISPS-MLC combined)", "Navigational Audit", "Other", "Renewal", "Safety", "Class", "Vetting Inspection"],
+  certificateTypes: ["Annual Confirmation", "Annual Test", "ASI - Annual Safety Inspection", "Bi-Annual", "Initial", "Intermediate", "Internal Audit (ISM-ISPS-MLC combined)", "Navigational Audit", "Other", "Preemptive", "Renewal", "Safety", "Vetting Inspection"],
 
   departments: ["Accounting", "Administration", "Chartering", "Crew", "HSQE", "IT", "Legal", "Management", "Marine", "Operations", "Spares", "Supplies", "Technical"],
 
