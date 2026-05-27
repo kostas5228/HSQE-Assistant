@@ -1520,7 +1520,6 @@ export default function InspectionStats({
   <div style={{ display: "grid", gap: 16 }}>
     <Card
       title="Scope"
-      subtitle="Filters (Vessels / Types) + Date range. (Always Overall)"
       right={
         <div
           style={{
