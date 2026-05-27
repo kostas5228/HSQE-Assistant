@@ -162,7 +162,7 @@ function Card({ title, icon: Icon, right, children, minHeight }) {
       style={{
         border: "1px solid #e5e7eb",
         borderRadius: 14,
-        padding: 16,
+        padding: "8px 16px 16px 16px",
         background: "white",
         minHeight: minHeight || "auto",
       }}
