@@ -550,8 +550,11 @@ function TaskCard({ t, onToggleComplete, onOpenMenu, onOpenSteps }) {
           </div>
 
           {Array.isArray(t.steps) && t.steps.length ? (
-            <div style={{ marginTop: 6, color: ui.muted, fontSize: 12, fontWeight: 800 }}>
-              {t.steps.filter((s) => s.done).length}/{t.steps.length} steps completed
+            <div style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+              <span style={{ color: ui.muted, fontSize: 12, fontWeight: 800 }}>
+                {t.steps.filter((s) => s.done).length}/{t.steps.length} steps completed
+              </span>
+              
             </div>
           ) : null}
 
