@@ -73,7 +73,7 @@ export const mockSettings = {
 
   certificateTypes: ["Annual Confirmation", "Annual Test", "ASI - Annual Safety Inspection", "Cyber Security Audit", "Initial", "Intermediate", "Internal Audit (ISM-ISPS-MLC combined)", "Navigational Audit", "Other", "Renewal", "Safety", "Class", "Vetting Inspection"],
 
-  departments: ["Accounting", "Administration", "Chartering", "Crew", "HSQE", "IT", "Legal", "Management", "Marine", "Supplies", "Technical"],
+  departments: ["Accounting", "Administration", "Chartering", "Crew", "HSQE", "IT", "Legal", "Management", "Marine", "Operations", "Spares", "Supplies", "Technical"],
 
   inspectionTypes: ["PSC", "Flag", "Vetting"],
 
