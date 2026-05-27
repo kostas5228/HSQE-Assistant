@@ -1327,9 +1327,6 @@ function useMediaQuery(query) {
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <div>
         <h1 style={{ fontSize: 26, fontWeight: 980, margin: 0, color: "#0f172a" }}>Dashboard</h1>
-        <div style={{ color: "#475569", marginTop: 6, fontWeight: 800 }}>
-          {user ? `Welcome, ${user.full_name || user.email}` : "Loading user..."}
-        </div>
       </div>
 
       <RowSection
