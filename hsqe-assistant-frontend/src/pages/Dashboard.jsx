@@ -1736,9 +1736,6 @@ function useMediaQuery(query) {
         </Modal>
       ) : null}
 
-      <div style={{ color: "#64748b", fontSize: 12, fontWeight: 800 }}>
-        * This phase works with temporary data. Later we will connect it with Azure/SharePoint.
-      </div>
     </div>
   );
 }
