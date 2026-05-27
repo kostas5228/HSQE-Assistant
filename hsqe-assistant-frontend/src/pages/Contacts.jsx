@@ -727,7 +727,6 @@ export default function Directory() {
       >
         <div>
           <div style={{ fontSize: 34, fontWeight: 950 }}>Company Directory</div>
-          <div style={{ color: "#64748b", marginTop: 6 }}>Corporate contacts directory</div>
         </div>
 
         <button
