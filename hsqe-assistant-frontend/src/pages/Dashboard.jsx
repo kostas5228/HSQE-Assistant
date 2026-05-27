@@ -342,7 +342,7 @@ function RowSection({ id, title, subtitle, icon: Icon, defaultOpen = true, child
         </div>
       </button>
 
-      {open ? <div style={{ padding: 14, background: "#f8fafc" }}>{children}</div> : null}
+      {open ? <div style={{ padding: "6px 14px 14px 14px, background: "#f8fafc" }}>{children}</div> : null}
     </div>
   );
 }
