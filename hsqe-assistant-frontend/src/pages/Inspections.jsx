@@ -2521,7 +2521,7 @@ export default function Inspections() {
       {/* ===================== REPORTS TAB ===================== */}
       {mainTab === "reports" ? (
         <>
-          <Card title="Report Filters" subtitle="Filter inspection reports by search or date range.">
+          <Card title="Report Filters">
             <div
               style={{
                 display: "flex",
