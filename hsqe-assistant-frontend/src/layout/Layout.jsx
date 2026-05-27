@@ -450,7 +450,7 @@ export default function Layout() {
           style={{
             maxWidth: 1280,
             margin: "0 auto",
-            padding: 20,
+            padding: "8px 20px",
           }}
         >
           <Outlet />
