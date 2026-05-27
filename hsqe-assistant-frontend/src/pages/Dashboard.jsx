@@ -265,7 +265,7 @@ function ItemRow({ title, subtitle, right, onClick }) {
   );
 }
 
-function RowSection({ id, title, subtitle, defaultOpen = true, children }) {
+function RowSection({ id, title, subtitle, icon: Icon, defaultOpen = true, children }) {
   const key = "dashboard_rows_v1";
   const [open, setOpen] = React.useState(defaultOpen);
 
@@ -311,7 +311,10 @@ function RowSection({ id, title, subtitle, defaultOpen = true, children }) {
         title={open ? "Collapse row" : "Expand row"}
       >
         <div style={{ textAlign: "left", minWidth: 0 }}>
-          <div style={{ fontWeight: 980, color: "#0f172a" }}>{title}</div>
+          <div style={{ fontWeight: 980, color: "#0f172a", display: "flex", alignItems: "center", gap: 8 }}>
+            {Icon ? <Icon size={16} /> : null}
+            {title}
+         </div>   
           {subtitle ? (
             <div style={{ color: "#64748b", fontWeight: 800, fontSize: 12, marginTop: 2 }}>{subtitle}</div>
           ) : null}
@@ -1332,9 +1335,10 @@ function useMediaQuery(query) {
       <RowSection
         id="row_calendar"
         title="Calendar"
+        icon={CalendarIcon}
         defaultOpen={true}
       >
-        <Card title="Calendar" icon={CalendarIcon}>
+        <Card>
           {/* Notes reminders come from localStorage via DashboardCalendar */}
           <DashboardCalendar certificates={certificates} tasks={tasks} user={user} />
         </Card>
