@@ -1324,7 +1324,7 @@ function useMediaQuery(query) {
   );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <div>
         <h1 style={{ fontSize: 26, fontWeight: 980, margin: 0, color: "#0f172a" }}>Dashboard</h1>
       </div>
