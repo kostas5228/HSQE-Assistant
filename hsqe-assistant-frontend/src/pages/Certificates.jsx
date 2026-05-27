@@ -1098,7 +1098,7 @@ export default function Certificates() {
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <div style={{ fontSize: 34, fontWeight: 950 }}>Certificates & Surveys</div>
+          <div style={{ fontSize: 26, fontWeight: 980, color: "#0f172a" }}>Certificates & Surveys</div>
         </div>
 
         <div style={{ display: "flex", gap: 10 }}>
