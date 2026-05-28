@@ -12,7 +12,6 @@ import {
   Dot,
   CheckCheck,
   BookX,
-  UsersRound,
   StickyNote,
   ScrollText,
 } from "lucide-react";
@@ -69,20 +68,15 @@ function loadNotesSafe() {
 }
 
 // --------------------
-// Icons + Colors (as requested)
+// Icons + Colors
 // --------------------
 const ICONS = {
   taskReminder: CheckCheck,
   taskDue: BookX,
-  assigned: UsersRound,
   note: StickyNote,
   cert: ScrollText,
 };
 
-// Requested colors:
-// - Tasks (including assigned): intense orange
-// - Notes: yellow
-// - Certificates: pink (as it was)
 const COLOR_CERT = "#ec4899"; // pink
 const COLOR_TASK = "#f97316"; // intense orange
 const COLOR_NOTE = "#facc15"; // yellow
@@ -97,7 +91,6 @@ function formatHMSS(d) {
 
 // ----------
 // Stable Toolbar component
-// ✅ closes on click outside + Esc
 // ----------
 function Toolbar({ label, onNavigate, onView, view, date }) {
   const [open, setOpen] = React.useState(false);
@@ -108,13 +101,9 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
   const labelBtnRef = React.useRef(null);
 
   React.useEffect(() => {
-    function onNotesChanged() {
-      setNotesTick((n) => n + 1);
-    }
-    window.addEventListener("hsqe_notes_changed", onNotesChanged);
-    return () => window.removeEventListener("hsqe_notes_changed", onNotesChanged);
+    const id = setInterval(() => setTick((n) => n + 1), 1000);
+    return () => clearInterval(id);
   }, []);
-
 
   function formatRangeLabel(labelText) {
     try {
@@ -126,7 +115,6 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
       const start = startOfWeek(base, { locale: el });
       const end = new Date(start);
 
-      // Work week = Mon–Fri (5 days)
       const spanDays = view === Views.WORK_WEEK ? 4 : 6;
       end.setDate(end.getDate() + spanDays);
 
@@ -148,14 +136,12 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
   React.useEffect(() => {
     try {
       const d = date instanceof Date ? date : new Date();
-      // value MUST be yyyy-MM-dd for <input type="date">
       setPicker(format(d, "yyyy-MM-dd"));
     } catch {
       setPicker("");
     }
   }, [label, view, date]);
 
-  // ✅ Close on ESC
   React.useEffect(() => {
     function onEsc(e) {
       if (e.key === "Escape") setOpen(false);
@@ -164,7 +150,6 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
     return () => document.removeEventListener("keydown", onEsc);
   }, []);
 
-  // ✅ Close on click outside (like normal apps)
   React.useEffect(() => {
     if (!open) return;
 
@@ -172,11 +157,8 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
       const t = e.target;
       const pop = popoverRef.current;
       const btn = labelBtnRef.current;
-
-      // if click is inside popover or label button => ignore
       if (pop && pop.contains(t)) return;
       if (btn && btn.contains(t)) return;
-
       setOpen(false);
     }
 
@@ -213,7 +195,6 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
     if (!picker) return;
     const d = new Date(picker);
     if (Number.isNaN(d.getTime())) return;
-
     onNavigate?.("DATE", d);
     setOpen(false);
   }
@@ -246,7 +227,6 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
         </button>
       </div>
 
-      {/* Center: label + clock */}
       <div style={{ display: "inline-flex", gap: 10, alignItems: "center", minWidth: 0 }}>
         <button
           ref={labelBtnRef}
@@ -390,12 +370,10 @@ function Toolbar({ label, onNavigate, onView, view, date }) {
 function EventCell({ event, title, onHover, onLeave }) {
   const type = event?.resource?.type;
   const kind = event?.resource?.kind;
-  const assigned = !!event?.resource?.assigned;
 
   let Icon = null;
   if (type === "certificate") Icon = ICONS.cert;
   else if (type === "note") Icon = ICONS.note;
-  else if (type === "task" && assigned) Icon = ICONS.assigned;
   else if (type === "task" && kind === "reminder") Icon = ICONS.taskReminder;
   else if (type === "task" && kind === "due") Icon = ICONS.taskDue;
 
@@ -422,7 +400,6 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
     certsDue: true,
     tasksReminder: true,
     tasksDue: true,
-    assignedTasks: true,
     notesReminder: true,
   });
 
@@ -467,29 +444,20 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
 
   // keep notes in sync with localStorage (event-driven)
   const [notesTick, setNotesTick] = React.useState(0);
-  
+
   React.useEffect(() => {
     const bump = () => setNotesTick((x) => x + 1);
-  
-    // same-tab event (create/edit/delete note)
+
     const onNotesChanged = () => bump();
-  
-    // cross-tab localStorage change
-    const onStorage = (e) => {
-      if (e.key === NOTES_KEY) bump();
-    };
-  
-    // when user returns to tab
+    const onStorage = (e) => { if (e.key === NOTES_KEY) bump(); };
     const onFocus = () => bump();
-    const onVisibility = () => {
-      if (document.visibilityState === "visible") bump();
-    };
-  
+    const onVisibility = () => { if (document.visibilityState === "visible") bump(); };
+
     window.addEventListener("hsqe_notes_changed", onNotesChanged);
     window.addEventListener("storage", onStorage);
     window.addEventListener("focus", onFocus);
     document.addEventListener("visibilitychange", onVisibility);
-  
+
     return () => {
       window.removeEventListener("hsqe_notes_changed", onNotesChanged);
       window.removeEventListener("storage", onStorage);
@@ -497,20 +465,8 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
-  
+
   const notes = React.useMemo(() => loadNotesSafe(), [notesTick]);
-
-
-  const isRelevantToMe = React.useCallback(
-    (t) => {
-      const me = user?.email;
-      if (!me) return true;
-      const assignedToMe = asArray(t.assigned_to).includes(me);
-      const createdByMe = (t.created_by || "") === me;
-      return assignedToMe || createdByMe;
-    },
-    [user]
-  );
 
   const events = (() => {
     const out = [];
@@ -522,7 +478,6 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
         if (!d) return;
 
         const { start, end } = makeAllDayDate(d);
-
         out.push({
           id: `cert-${c.id}`,
           title: `${c.certificate_name || c.certificate_code || "Certificate"}`,
@@ -535,14 +490,11 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
       });
     }
 
-    // Tasks (open only)
+    // Tasks (open only) — show ALL tasks passed in; backend already filters by user
     (Array.isArray(tasks) ? tasks : []).forEach((t) => {
       if ((t.status || "") === "Completed") return;
 
       const hasAssignees = asArray(t.assigned_to).length > 0;
-      const relevant = isRelevantToMe(t);
-
-      if (filters.assignedTasks && !relevant) return;
 
       if (filters.tasksReminder) {
         const r = safeDate(t.reminder_at);
@@ -732,17 +684,6 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
             />
             <BookX size={16} />
             Tasks Due
-          </label>
-
-          <label style={filterItem(filters.assignedTasks, COLOR_TASK)}>
-            <input
-              type="checkbox"
-              checked={filters.assignedTasks}
-              onChange={(e) => setFilters((p) => ({ ...p, assignedTasks: e.target.checked }))}
-              style={{ margin: 0 }}
-            />
-            <UsersRound size={16} />
-            Assigned Tasks
           </label>
 
           <label style={filterItem(filters.notesReminder, COLOR_NOTE)}>
