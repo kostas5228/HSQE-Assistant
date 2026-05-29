@@ -436,7 +436,12 @@ function reportFromBE(r) {
     counts: (r.counts && typeof r.counts === "object") ? r.counts : {},
   };
 }
+
 function reportToBE(r) {
+  const type = (r?.inspection_type || "").toLowerCase(); // ← ΠΡΟΣΘΗΚΗ
+  const isPSC = type === "psc";                          // ← ΠΡΟΣΘΗΚΗ
+  const isFlag = type === "flag";                        // ← ΠΡΟΣΘΗΚΗ
+
   return {
     date: nullIfEmpty(r?.date),
     vessel: nullIfEmpty(r?.vessel),
@@ -445,7 +450,7 @@ function reportToBE(r) {
     flagState: nullIfEmpty(r?.flag_state),
     inspectorName: nullIfEmpty(r?.inspector_name),
     placeOfInspection: nullIfEmpty(r?.place),
-    detention: !!r?.detention,
+    detention: (isPSC || isFlag) ? !!r?.detention : null,  // ← ΑΛΛΑΓΗ
     cost: r?.cost != null && r.cost !== "" ? Number(r.cost) : null,
     validity: r?.validity_months != null && r.validity_months !== "" ? Number(r.validity_months) : null,
     notes: nullIfEmpty(r?.notes),
