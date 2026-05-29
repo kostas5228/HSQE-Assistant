@@ -451,7 +451,7 @@ function reportToBE(r) {
     inspectorName: nullIfEmpty(r?.inspector_name),
     placeOfInspection: nullIfEmpty(r?.place),
     detention: (isPSC || isFlag) ? !!r?.detention : null,  // ← ΑΛΛΑΓΗ
-    cost: r?.cost != null && r.cost !== "" ? Number(r.cost) : null,
+    cost: (isPSC || isFlag) ? (Number(r?.cost) || null) : null,
     validity: r?.validity_months != null && r.validity_months !== "" ? Number(r.validity_months) : null,
     notes: nullIfEmpty(r?.notes),
     attachments: Array.isArray(r?.attachments) ? r.attachments : [],
