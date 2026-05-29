@@ -227,8 +227,8 @@ export default function InspectionReportForm({ initial = {}, onCancel, onSave, s
 
       attachments: Array.isArray(form.attachments) ? form.attachments : [],
 
-      detention: detentionAllowed ? !!form.detention : false,
-      cost: toMoneyNumber(form.cost),
+      detention: detentionAllowed ? !!form.detention : null,
+      cost: detentionAllowed ? toMoneyNumber(form.cost) : null,
 
       psc_authority: isPSC ? form.psc_authority : "",
       flag_state: isFlag ? form.flag_state : "",
