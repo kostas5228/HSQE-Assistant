@@ -1262,6 +1262,16 @@ export default function Tasks() {
     queryFn: listTasks,
   });
 
+  // Keep openStepsTask in sync with the live tasks list.
+  // Every time tasks refetches (e.g. after toggling complete or a step),
+  // replace the stale snapshot so the modal title and steps stay correct.
+  React.useEffect(() => {
+    if (!openStepsTask) return;
+    const fresh = tasks.find((t) => t.id === openStepsTask.id);
+    if (fresh) setOpenStepsTask(fresh);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tasks]);
+
   
  function goSection(next) {
   // allow switching section even if a modal is open
