@@ -1426,7 +1426,6 @@ React.useEffect(() => {
     mutationFn: ({ id, input }) => updateTask(id, input),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: ["tasks"] });
-      setEditing(null);
     },
   });
 
