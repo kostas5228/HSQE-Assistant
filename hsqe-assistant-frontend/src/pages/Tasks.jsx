@@ -1241,10 +1241,6 @@ export default function Tasks() {
   const [editingId, setEditingId] = React.useState(null);
   const [openStepsTaskId, setOpenStepsTaskId] = React.useState(null);
 
-  // Always derive from live tasks so they never go stale after a refetch
-  const editing = editingId ? (tasks.find((t) => t.id === editingId) ?? null) : null;
-  const openStepsTask = openStepsTaskId ? (tasks.find((t) => t.id === openStepsTaskId) ?? null) : null;
-
   // Draft persistence for the "New Task" modal: keeps user's input when they
   // navigate away and reopens the modal automatically when they come back.
   const { draft: taskDraft, setDraft: setTaskDraft, clearDraft: clearTaskDraft } =
@@ -1265,6 +1261,10 @@ export default function Tasks() {
     queryKey: ["tasks"],
     queryFn: listTasks,
   });
+
+  // Always derive from live tasks so they never go stale after a refetch
+  const editing = editingId ? (tasks.find((t) => t.id === editingId) ?? null) : null;
+  const openStepsTask = openStepsTaskId ? (tasks.find((t) => t.id === openStepsTaskId) ?? null) : null;
 
   
  function goSection(next) {
