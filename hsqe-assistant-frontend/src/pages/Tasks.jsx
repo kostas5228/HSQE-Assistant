@@ -1238,15 +1238,15 @@ export default function Tasks() {
   }
 
   const [showNew, setShowNew] = React.useState(false);
-  const [editingId, setEditingId] = React.useState(null);
-  const [openStepsTaskId, setOpenStepsTaskId] = React.useState(null);
+  const [editing, setEditing] = React.useState(null);
+  const [openStepsTask, setOpenStepsTask] = React.useState(null);
 
   // Draft persistence for the "New Task" modal: keeps user's input when they
   // navigate away and reopens the modal automatically when they come back.
   const { draft: taskDraft, setDraft: setTaskDraft, clearDraft: clearTaskDraft } =
     useDraft("tasks-new");
   React.useEffect(() => {
-    if (taskDraft && !showNew && !editingId) setShowNew(true);
+    if (taskDraft && !showNew && !editing) setShowNew(true);
     // Only run on mount / when draft appears.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -1261,10 +1261,6 @@ export default function Tasks() {
     queryKey: ["tasks"],
     queryFn: listTasks,
   });
-
-  // Always derive from live tasks so they never go stale after a refetch
-  const editing = editingId ? (tasks.find((t) => t.id === editingId) ?? null) : null;
-  const openStepsTask = openStepsTaskId ? (tasks.find((t) => t.id === openStepsTaskId) ?? null) : null;
 
   
  function goSection(next) {
@@ -1430,6 +1426,7 @@ React.useEffect(() => {
     mutationFn: ({ id, input }) => updateTask(id, input),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: ["tasks"] });
+      setEditing(null);
     },
   });
 
@@ -1494,12 +1491,16 @@ React.useEffect(() => {
     const steps = Array.isArray(task.steps) ? task.steps : [];
     const nextSteps = steps.map((s) => (s.id === stepId ? { ...s, done: nextDone } : s));
     updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
+
+    setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
 
   function updateStepText(task, stepId, nextText) {
     const steps = Array.isArray(task.steps) ? task.steps : [];
     const nextSteps = steps.map((s) => (s.id === stepId ? { ...s, text: nextText } : s));
     updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
+
+    setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
 
   function reorderSteps(task, fromIndex, toIndex) {
@@ -1508,6 +1509,7 @@ React.useEffect(() => {
     const nextSteps = reorderStepsByIndex(sorted, fromIndex, toIndex);
 
     updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
+    setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
 
   function addStep(task, text) {
@@ -1521,6 +1523,8 @@ React.useEffect(() => {
     };
     const nextSteps = [...steps, next];
     updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
+
+    setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
 
   // --------------------
@@ -1769,7 +1773,7 @@ React.useEffect(() => {
                     t={t}
                     onToggleComplete={() => toggleComplete(t)}
                     onOpenMenu={(e) => handleContextMenu(e, t)}
-                    onOpenSteps={() => setOpenStepsTaskId(t.id)}
+                    onOpenSteps={() => setOpenStepsTask(t)}
                   />
                 </div>
               ))
@@ -1833,7 +1837,7 @@ React.useEffect(() => {
             onClose={() => setMenu(null)}
             onEdit={() => {
               if (menu.task?.__note) setEditingNote(menu.task.data);
-              else setEditingId(menu.task.id);
+              else setEditing(menu.task);
             }}
             onDelete={() => {
               if (menu.task?.__note) deleteNote(menu.task.data.id);
@@ -1888,11 +1892,11 @@ React.useEffect(() => {
 
         {/* Edit Task */}
         {editing ? (
-          <Modal title="Edit Task" onClose={() => setEditingId(null)}>
+          <Modal title="Edit Task" onClose={() => setEditing(null)}>
             <TaskForm
               initial={editing}
               saving={updateMut.isPending}
-              onCancel={() => setEditingId(null)}
+              onCancel={() => setEditing(null)}
               onSave={(data) => updateMut.mutate({ id: editing.id, input: data })}
               vesselsOptions={vesselsList}
               usersOptions={usersList}
@@ -1904,7 +1908,7 @@ React.useEffect(() => {
 
         {/* Steps-only modal */}
         {openStepsTask ? (
-          <Modal title={openStepsTask.title || "Steps"} onClose={() => setOpenStepsTaskId(null)} width="min(720px, 100%)">
+          <Modal title={openStepsTask.title || "Steps"} onClose={() => setOpenStepsTask(null)} width="min(720px, 100%)">
             <StepsOnly
               task={openStepsTask}
               onToggleStep={(stepId, nextDone) => toggleStep(openStepsTask, stepId, nextDone)}
