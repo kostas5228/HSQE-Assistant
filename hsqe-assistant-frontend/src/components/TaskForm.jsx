@@ -161,6 +161,11 @@ function PopoverMultiSelect({ label, placeholder, options, values, onChange, ren
   );
 }
 
+function autosize(el) {
+  if (!el) return;
+  el.style.height = "auto";
+  el.style.height = `${el.scrollHeight}px`;
+}
 export default function TaskForm({
   initial = {},
   onCancel,
@@ -172,6 +177,7 @@ export default function TaskForm({
   onDraftChange,
 }) {
   const t = ui();
+  const notesRef = React.useRef(null);
 
   const [form, setForm] = React.useState({
     title: initial.title || "",
@@ -401,11 +407,20 @@ export default function TaskForm({
       <div style={{ display: "grid" }}>
         <Label>Notes</Label>
         <textarea
+          ref={notesRef}
           value={form.notes}
-          onChange={(e) => setField("notes", e.target.value)}
+          onChange={(e) => {
+            setField("notes", e.target.value);
+            autosize(e.currentTarget);
+          }}
           placeholder="Notes..."
-          rows={4}
-          style={TextareaBaseStyle()}
+          rows={1}
+          style={{
+            ...TextareaBaseStyle(),
+            resize: "none",
+            overflow: "hidden",
+            minHeight: 42,
+          }}
         />
       </div>
 
