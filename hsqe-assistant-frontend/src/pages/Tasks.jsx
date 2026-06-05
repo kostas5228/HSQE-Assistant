@@ -839,10 +839,10 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
     
     {task?.notes ? (
         <div style={{ marginTop: 4, display: "grid", gap: 6 }}>
-          <div style={{ fontWeight: 950, color: ui.text }}>Notes</div>
-          <textarea
+          <div style={{ fontWeight: 950, color: ui.text }}>Notes</div>          
+           <textarea
             defaultValue={task.notes}
-            rows={2}
+            rows={1}
             style={{
               width: "100%",
               borderRadius: 10,
@@ -850,11 +850,14 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
               padding: "4px 12px",
               fontSize: 14,
               outline: "none",
-              resize: "vertical",
+              resize: "none",
+              overflow: "hidden",
               color: ui.text,
-              fontWeight: 800,
+              fontWeight: 400,
               boxSizing: "border-box",
+              lineHeight: 1.3,
             }}
+  onInput={(e) => autosize(e.currentTarget)}
             onFocus={(e) => {
               e.currentTarget.style.borderColor = "#93c5fd";
               e.currentTarget.style.boxShadow = "0 0 0 4px rgba(59,130,246,0.12)";
