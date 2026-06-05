@@ -178,7 +178,7 @@ export default function TaskStepsEditor({ steps = [], onChange }) {
                 width: "100%",
                 border: `1px solid ${border}`,
                 borderRadius: 10,
-                padding: "3px 10px",
+                padding: "2px 10px",
                 fontSize: 14,
                 outline: "none",
 
@@ -192,7 +192,7 @@ export default function TaskStepsEditor({ steps = [], onChange }) {
                 wordBreak: "break-word",
 
                 // smaller baseline height
-                minHeight: 24,
+                minHeight: 20,
                 lineHeight: 1.3,
 
                 textDecoration: s.done ? "line-through" : "none",
