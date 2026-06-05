@@ -636,6 +636,10 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
   const [drafts, setDrafts] = React.useState({});
   const taRefs = React.useRef({});
   const [dragIndex, setDragIndex] = React.useState(null);
+  const notesRef = React.useRef(null);
+  React.useEffect(() => {
+    autosize(notesRef.current);
+  }, [task?.notes]);
 
   React.useEffect(() => {
     setNewStep("");
@@ -841,6 +845,7 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
         <div style={{ marginTop: 4, display: "grid", gap: 6 }}>
           <div style={{ fontWeight: 950, color: ui.text }}>Notes</div>          
            <textarea
+            ref={notesRef}
             defaultValue={task.notes}
             rows={1}
             style={{
