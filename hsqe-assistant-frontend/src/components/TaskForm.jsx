@@ -423,7 +423,7 @@ export default function TaskForm({
             ...TextareaBaseStyle(),
             resize: "none",
             overflow: "hidden",
-            minHeight: 42,
+            minHeight: 20,
           }}
         />
       </div>
