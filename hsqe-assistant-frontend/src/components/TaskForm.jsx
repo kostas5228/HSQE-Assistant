@@ -425,6 +425,7 @@ export default function TaskForm({
             overflow: "hidden",
             minHeight: 20,
             padding: "2px 12px",
+            lineHeight: 1.3,
           }}
         />
       </div>
