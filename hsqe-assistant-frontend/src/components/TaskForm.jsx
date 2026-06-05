@@ -423,8 +423,8 @@ export default function TaskForm({
             ...TextareaBaseStyle(),
             resize: "none",
             overflow: "hidden",
-            minHeight: 34,
-            padding: "8px 12px",
+            minHeight: 20,
+            padding: "4px 12px",
             lineHeight: 1.3,
           }}
         />
