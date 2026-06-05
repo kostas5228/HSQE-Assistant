@@ -714,7 +714,7 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
       {sorted.length === 0 ? (
         <div style={{ color: ui.muted, fontWeight: 800 }}>No steps available.</div>
       ) : (
-        <div style={{ display: "grid", gap: 10 }}>
+        <div style={{ display: "grid", gap: 6 }}>
           {sorted.map((s, idx) => {
             const isEditing = drafts[s.id] !== undefined;
             const value = isEditing ? drafts[s.id] : (s.text ?? "");
@@ -727,9 +727,9 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
                 style={{
                   display: "grid",
                   gridTemplateColumns: "18px 22px 1fr",
-                  gap: 10,
+                  gap: 8,
                   alignItems: "start",
-                  padding: 12,
+                  padding: 8,
                   borderRadius: 12,
                   border: `1px solid ${ui.border}`,
                   background: "white",
