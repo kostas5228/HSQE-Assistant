@@ -631,7 +631,7 @@ function autosize(el) {
   el.style.height = `${el.scrollHeight}px`;
 }
 
-function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder }) {
+function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder, onUpdateNotes }) {
   const [newStep, setNewStep] = React.useState("");
   const [drafts, setDrafts] = React.useState({});
   const taRefs = React.useRef({});
@@ -837,6 +837,36 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder 
         </div>
       )}
     
+    {task?.notes ? (
+        <div style={{ marginTop: 4, display: "grid", gap: 6 }}>
+          <div style={{ fontWeight: 950, color: ui.text }}>Notes</div>
+          <textarea
+            defaultValue={task.notes}
+            rows={2}
+            style={{
+              width: "100%",
+              borderRadius: 10,
+              border: `1px solid ${ui.border}`,
+              padding: "8px 12px",
+              fontSize: 14,
+              outline: "none",
+              resize: "vertical",
+              color: ui.text,
+              fontWeight: 800,
+              boxSizing: "border-box",
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = "#93c5fd";
+              e.currentTarget.style.boxShadow = "0 0 0 4px rgba(59,130,246,0.12)";
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = ui.border;
+              e.currentTarget.style.boxShadow = "none";
+              onUpdateNotes?.(e.target.value);
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -1912,7 +1942,8 @@ React.useEffect(() => {
               onAddStep={(text) => addStep(openStepsTask, text)}
               onUpdateStepText={(stepId, text) => updateStepText(openStepsTask, stepId, text)}
               onReorder={(fromIdx, toIdx) => reorderSteps(openStepsTask, fromIdx, toIdx)}
-            />
+              onUpdateNotes={(text) => updateMut.mutate({ id: openStepsTask.id, input: { notes: text } })}
+            />              
           </Modal>
         ) : null}
 
