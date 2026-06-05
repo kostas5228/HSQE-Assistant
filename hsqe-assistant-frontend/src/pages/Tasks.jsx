@@ -816,7 +816,7 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
                 ) : (
                   <div
                     style={{
-                      padding: "8px 10px",
+                      padding: "4px 10px",
                       borderRadius: 10,
                       fontWeight: 400,
                       color: s.done ? ui.muted : ui.text,
@@ -847,7 +847,7 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder,
               width: "100%",
               borderRadius: 10,
               border: `1px solid ${ui.border}`,
-              padding: "8px 12px",
+              padding: "4px 12px",
               fontSize: 14,
               outline: "none",
               resize: "vertical",
