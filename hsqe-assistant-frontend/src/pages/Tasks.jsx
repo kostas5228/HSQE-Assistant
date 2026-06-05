@@ -1462,6 +1462,9 @@ React.useEffect(() => {
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: ["tasks"] });
       setEditing(null);
+      setOpenStepsTask((prev) =>
+        prev?.id === variables.id ? { ...prev, ...variables.input } : prev
+      );
     },
   });
 
