@@ -836,10 +836,7 @@ function StepsOnly({ task, onToggleStep, onAddStep, onUpdateStepText, onReorder 
           })}
         </div>
       )}
-
-      <div style={{ fontSize: 12, color: ui.muted, fontWeight: 800 }}>
-        Tip: Click a step to edit • Shift+Enter=New line • Enter=Save • Esc=Cancel • Drag from ⋮⋮ to reorder
-      </div>
+    
     </div>
   );
 }
