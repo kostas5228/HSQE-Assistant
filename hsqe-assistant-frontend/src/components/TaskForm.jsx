@@ -424,7 +424,7 @@ export default function TaskForm({
             resize: "none",
             overflow: "hidden",
             minHeight: 28,
-            padding: "2px 12px",
+            padding: "8px 12px",
             lineHeight: 1.3,
           }}
         />
