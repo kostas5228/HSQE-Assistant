@@ -203,6 +203,10 @@ export default function TaskForm({
 
   // Notify parent so a draft can be persisted across navigation.
   // Skip the very first call so we don't persist an empty/initial draft.
+  React.useEffect(() => {
+    autosize(notesRef.current);
+  }, [form.notes]);
+  
   const draftFirstRef = React.useRef(true);
   React.useEffect(() => {
     if (draftFirstRef.current) {
