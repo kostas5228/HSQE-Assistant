@@ -222,9 +222,6 @@ export default function TaskStepsEditor({ steps = [], onChange }) {
         ))}
       </div>
 
-      <div style={{ marginTop: 8, fontSize: 12, color: muted }}>
-        Σύρε & άφησε (drag & drop) για να αλλάξεις σειρά.
-      </div>
     </div>
   );
 }
