@@ -239,7 +239,6 @@ export default function TaskForm({
     <form onSubmit={submit} style={{ display: "grid", gap: 14 }}>
       {/* Title */}
       <div style={{ display: "grid" }}>
-        <Label>Title *</Label>
         <input
           value={form.title}
           onChange={(e) => setField("title", e.target.value)}
