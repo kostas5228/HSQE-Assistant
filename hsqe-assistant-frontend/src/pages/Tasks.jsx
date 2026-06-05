@@ -609,7 +609,7 @@ function TaskCard({ t, onToggleComplete, onOpenMenu, onOpenSteps }) {
           style={{
             fontSize: 13,
             fontWeight: 950,
-            color: typeof dueDays === "number" && dueDays < 0 ? "#b91c1c" : ui.text,
+            color: "#b91c1c",
           }}
         >
           {t.due_date || ""}
