@@ -164,7 +164,9 @@ function PopoverMultiSelect({ label, placeholder, options, values, onChange, ren
 function autosize(el) {
   if (!el) return;
   el.style.height = "auto";
-  el.style.height = `${el.scrollHeight}px`;
+  const style = window.getComputedStyle(el);
+  const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+  el.style.height = `${el.scrollHeight - padding}px`;
 }
 export default function TaskForm({
   initial = {},
