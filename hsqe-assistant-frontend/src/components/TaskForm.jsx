@@ -178,9 +178,6 @@ export default function TaskForm({
 }) {
   const t = ui();
   const notesRef = React.useRef(null);
-  React.useEffect(() => {
-    autosize(notesRef.current);
-  }, [form.notes]);
 
   const [form, setForm] = React.useState({
     title: initial.title || "",
