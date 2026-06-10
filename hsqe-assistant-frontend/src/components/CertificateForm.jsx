@@ -255,7 +255,7 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
             rows={1}
             style={ui.textareaAuto}
           />
-          <div style={ui.help}>One line initially — auto-expands as you type.</div>
+
         </div>
       </div>
 
