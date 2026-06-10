@@ -108,6 +108,7 @@ const ICONS = {
 
 const COLOR_CERT = "#ec4899";
 const COLOR_TASK = "#f97316";
+const COLOR_TASK_DUE = "#ef4444";
 const COLOR_NOTE = "#facc15";
 
 function formatHMSS(d) {
@@ -458,7 +459,7 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
             title: `${t.title || "Task"}`,
             start, end, allDay: true,
             resource: { type: "task", item: t, kind: "due", assigned: hasAssignees },
-            color: COLOR_TASK,
+            color: COLOR_TASK_DUE,
           });
         }
       }
@@ -561,7 +562,7 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
             <CheckCheck size={16} /> Task Reminders
           </label>
 
-          <label style={filterItem(filters.tasksDue, COLOR_TASK)}>
+          <label style={filterItem(filters.tasksDue, COLOR_TASK_DUE)}>
             <input type="checkbox" checked={filters.tasksDue}
               onChange={(e) => handleFiltersChange((p) => ({ ...p, tasksDue: e.target.checked }))}
               style={{ margin: 0 }} />
