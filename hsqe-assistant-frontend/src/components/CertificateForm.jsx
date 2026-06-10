@@ -174,7 +174,7 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
               ))}
             </select>
 
-            {!form.vessel ? <div style={ui.error}>Vessel required</div> : null}
+
           </div>
 
           <div style={{ display: "grid", gap: 14, gridTemplateColumns: "0.85fr 1.15fr", alignItems: "start" }}>
@@ -186,7 +186,7 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
                 onChange={(e) => setField("certificate_code", e.target.value)}
                 style={ui.input}
               />
-              <div style={ui.help}>Short certificate code (optional).</div>
+
             </div>
 
             <div style={{ display: "grid", gap: 6, minWidth: 0 }}>
@@ -203,7 +203,7 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
                 ))}
               </select>
 
-              <div style={ui.help}>Select inspection/certificate category.</div>
+
             </div>
           </div>
 
@@ -229,7 +229,7 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
           <div style={{ display: "grid", gap: 6, minWidth: 0 }}>
             <label style={ui.label}>From Date</label>
             <input type="date" value={form.from_date} onChange={(e) => setField("from_date", e.target.value)} style={ui.dateInput} />
-            <div style={ui.help}>Start date (optional).</div>
+
           </div>
 
           <div style={{ display: "grid", gap: 6, minWidth: 0 }}>
@@ -237,7 +237,7 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
               To Date <span style={ui.req}>*</span>
             </label>
             <input type="date" value={form.to_date} onChange={(e) => setField("to_date", e.target.value)} style={ui.dateInput} required />
-            <div style={ui.help}>Expiry / due date (required).</div>
+
           </div>
         </div>
       </div>
