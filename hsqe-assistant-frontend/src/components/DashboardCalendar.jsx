@@ -108,7 +108,7 @@ const ICONS = {
 
 const COLOR_CERT = "#ec4899";
 const COLOR_TASK = "#f97316";
-const COLOR_TASK_DUE = "#ef4444";
+const COLOR_TASK_DUE = "#ff1a1a";
 const COLOR_NOTE = "#facc15";
 
 function formatHMSS(d) {
