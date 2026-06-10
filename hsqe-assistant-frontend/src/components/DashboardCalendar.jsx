@@ -609,7 +609,7 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
               backgroundColor: event.color || "#3b82f6",
               borderColor: event.color || "#3b82f6",
               cursor: "pointer", borderRadius: 10,
-              paddingLeft: 8, paddingRight: 8, fontWeight: 900,
+              paddingLeft: 8, paddingRight: 8, fontWeight: 400,
               color: event.color === COLOR_NOTE ? "#0f172a" : "white",
             },
           })}
