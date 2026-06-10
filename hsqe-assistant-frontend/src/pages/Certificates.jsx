@@ -887,7 +887,7 @@ function TableRow({ c, onOpenMenu, isFlash, rowRef }) {
         <div style={{ fontWeight: 700 }}>{c.certificate_name || "—"}</div>
         <div style={{ fontSize: 12, color: "#64748b" }}>{c.type || ""}</div>
         {c.notes ? (
-          <div style={{ fontSize: 12, color: "#64748b", fontStyle: "italic", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 320 }}>
+          <div style={{ fontSize: 12, color: "#b91c1c", fontStyle: "italic", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 320 }}>
             Notes: {c.notes}
           </div>
         ) : null}
