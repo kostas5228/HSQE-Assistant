@@ -886,6 +886,11 @@ function TableRow({ c, onOpenMenu, isFlash, rowRef }) {
       <td style={td}>
         <div style={{ fontWeight: 700 }}>{c.certificate_name || "—"}</div>
         <div style={{ fontSize: 12, color: "#64748b" }}>{c.type || ""}</div>
+        {c.notes ? (
+          <div style={{ fontSize: 12, color: "#64748b", fontStyle: "italic", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 320 }}>
+            Notes: {c.notes}
+          </div>
+        ) : null}
       </td>
       <td style={{ ...td, textAlign: "center" }}>{formatDMY(c.from_date)}</td>
       <td style={{ ...td, textAlign: "center" }}>{formatDMY(c.to_date)}</td>
@@ -1208,7 +1213,7 @@ export default function Certificates() {
 
       {/* Table */}
       <div style={{ border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden", background: "white" }}>
-        <div ref={scrollContainerRef} style={{ maxHeight: "62vh", overflow: "auto" }}>
+        <div ref={scrollContainerRef} style={{ maxHeight: "calc(100vh - 240px)", overflow: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <TableHeader
               sortKey={sortKey}
