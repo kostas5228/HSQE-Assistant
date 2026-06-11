@@ -331,23 +331,30 @@ function EventCell({ event, title, onHover, onLeave }) {
 export default function DashboardCalendar({ certificates = [], tasks = [], user }) {
   const navigate = useNavigate();
 
+  // ✅ Load persisted prefs on first render
   const [view, setView] = React.useState(() => {
     const p = loadCalendarPrefs();
     return p?.view ?? Views.WEEK;
   });
 
-  const [date, setDate] = React.useState(() => new Date());
+  const [date, setDate] = React.useState(() => {
+    // Always start on today's date — no point persisting the date
+    return new Date();
+  });
 
   const [filters, setFilters] = React.useState(() => {
     const p = loadCalendarPrefs();
     if (!p?.filters) return DEFAULT_FILTERS;
+    // Merge with defaults so new filters are always present
     return { ...DEFAULT_FILTERS, ...p.filters };
   });
 
+  // ✅ Persist whenever view or filters change
   React.useEffect(() => {
     saveCalendarPrefs({ view, filters });
   }, [view, filters]);
 
+  // Wrap setView and setFilters to also persist
   function handleViewChange(newView) {
     setView(newView);
   }
@@ -475,9 +482,6 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
     return out;
   })();
 
-  // ✅ FIX: υπολόγισε αν υπάρχουν all-day events για να κρύψουμε το row όταν είναι άδειο
-  const hasAllDayEvents = events.some((e) => e.allDay);
-
   const scrollToTime = React.useMemo(() => { const t = new Date(); t.setHours(8, 0, 0, 0); return t; }, []);
   const min = React.useMemo(() => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; }, []);
   const max = React.useMemo(() => { const t = new Date(); t.setHours(23, 59, 59, 999); return t; }, []);
@@ -574,11 +578,7 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
         </div>
       </div>
 
-      {/* ✅ FIX: conditional class για να κρύψουμε το all-day row όταν είναι άδειο */}
-      <div
-        style={{ height: 640, borderRadius: 12, overflow: "hidden", border: "1px solid #e5e7eb", background: "white" }}
-        className={hasAllDayEvents ? "" : "no-allday"}
-      >
+      <div style={{ height: 640, borderRadius: 12, overflow: "hidden", border: "1px solid #e5e7eb", background: "white" }}>
         <Calendar
           localizer={localizer}
           events={events}
@@ -640,11 +640,7 @@ export default function DashboardCalendar({ certificates = [], tasks = [], user 
         .rbc-current-time-indicator { background-color: #ef4444; height: 2px; }
         .rbc-month-view .rbc-today { background-color: rgba(59, 130, 246, 0.14); }
         .rbc-time-view .rbc-today { background-color: rgba(59, 130, 246, 0.12); }
-        .rbc-allday-cell { background: rgba(15, 23, 42, 0.02); height: auto !important; min-height: 0 !important; }
-        .rbc-row-content { height: auto !important; }
-        .no-allday .rbc-allday-cell { display: none !important; }
-        .no-allday .rbc-time-header-cell { display: none !important; }
-        .no-allday .rbc-time-header-gutter { display: none !important; }
+        .rbc-allday-cell { background: rgba(15, 23, 42, 0.02); }
         .rbc-event:focus { outline: none; }
         .rbc-header { font-weight: 900; font-size: 12px; color: #334155; }
         .rbc-toolbar-label { font-size: 13px; }
