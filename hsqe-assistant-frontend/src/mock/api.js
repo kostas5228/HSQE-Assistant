@@ -276,7 +276,7 @@ function applyCertificateFilters(list, filters = {}) {
 
   return list.filter((c) => {
     if (q) {
-      const hay = `${c.vessel || ""} ${c.certificate_code || ""} ${c.certificate_name || ""} ${c.type || ""}`.toLowerCase();
+      const hay = `${c.vessel || ""} ${c.certificate_code || ""} ${c.certificate_name || ""} ${c.type || ""} ${c.notes || ""}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     if (vesselsSelected.length && !vesselsSelected.includes(c.vessel)) return false;
