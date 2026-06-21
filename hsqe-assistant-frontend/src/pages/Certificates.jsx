@@ -306,12 +306,19 @@ function exportCertificatesPdf({ rows, titleLines }) {
 
     const name = row.certificate_name || "—";
     const type = row.type || "";
+    const notes = row.notes || "";
 
     const nameLines = doc.splitTextToSize(name, col.details - cellPadX * 2);
     const typeLines = type ? doc.splitTextToSize(type, col.details - cellPadX * 2) : [];
     const typeLineCount = typeLines.length ? 1 : 0;
 
-    const detailsLines = nameLines.length + typeLineCount;
+    // Notes wrap like in the app, capped to 2 lines (with ellipsis) to keep rows compact.
+    const notesLines = notes
+      ? doc.splitTextToSize(`Notes: ${notes}`, col.details - cellPadX * 2)
+      : [];
+    const notesLineCount = Math.min(notesLines.length, 2);
+
+    const detailsLines = nameLines.length + typeLineCount + notesLineCount;
     const detailsH = cellPadY * 2 + detailsLines * lineH;
 
     const fixedH = 12;
@@ -434,10 +441,36 @@ function exportCertificatesPdf({ rows, titleLines }) {
     }
 
     const typeText = r.type || "";
+    let typeLineCount = 0;
     if (typeText) {
       doc.setFont("helvetica", "normal");
       doc.setTextColor(100, 116, 139);
       doc.text(typeText, x + cellPadX, y + 6 + maxNameLines * lineH);
+      doc.setTextColor(15, 23, 42);
+      typeLineCount = 1;
+    }
+
+    const notesText = r.notes || "";
+    if (notesText) {
+      doc.setFont("helvetica", "italic");
+      doc.setFontSize(9.5);
+      doc.setTextColor(185, 28, 28); // matches app's #b91c1c
+
+      const notesLines = doc.splitTextToSize(
+        `Notes: ${notesText}`,
+        col.details - cellPadX * 2
+      );
+      const maxNotesLines = Math.min(2, notesLines.length);
+      for (let i = 0; i < maxNotesLines; i++) {
+        let line = notesLines[i];
+        // Add ellipsis if we're truncating a longer note on the last visible line.
+        if (i === maxNotesLines - 1 && notesLines.length > maxNotesLines) {
+          line = line.replace(/\s+\S*$/, "") + "…";
+        }
+        doc.text(line, x + cellPadX, y + 6 + (maxNameLines + typeLineCount + i) * lineH);
+      }
+
+      doc.setFont("helvetica", "normal");
       doc.setTextColor(15, 23, 42);
     }
     x += col.details;
