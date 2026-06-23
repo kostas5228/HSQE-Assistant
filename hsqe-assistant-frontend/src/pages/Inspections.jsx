@@ -829,6 +829,38 @@ function TextCell({ value, lines = 3, label, item, onOpen }) {
 // --------------------
 // List Row (table)
 // --------------------
+// Reusable long-press hook for touch devices (iPad/iOS).
+// Uses Pointer Events API — works on both mouse and touch.
+function useLongPress(onTrigger, delay = 520) {
+  const timer = React.useRef(null);
+  const startXY = React.useRef({ x: 0, y: 0 });
+  const moved = React.useRef(false);
+
+  function clear() {
+    if (timer.current) { clearTimeout(timer.current); timer.current = null; }
+  }
+
+  return {
+    onPointerDown(e) {
+      if (e.pointerType === "mouse") return;
+      moved.current = false;
+      startXY.current = { x: e.clientX, y: e.clientY };
+      clear();
+      timer.current = setTimeout(() => {
+        if (!moved.current) onTrigger({ x: e.clientX, y: e.clientY });
+      }, delay);
+    },
+    onPointerMove(e) {
+      if (!timer.current) return;
+      const dx = Math.abs(e.clientX - startXY.current.x);
+      const dy = Math.abs(e.clientY - startXY.current.y);
+      if (dx > 8 || dy > 8) moved.current = true;
+    },
+    onPointerUp: clear,
+    onPointerCancel: clear,
+  };
+}
+
 function ListRow({ item, columns, onOpenMenu, onOpenText, highlight }) {
   const tdBase = {
     padding: "12px 14px",
@@ -916,6 +948,8 @@ function ListRow({ item, columns, onOpenMenu, onOpenText, highlight }) {
     }
   }
 
+  const longPress = useLongPress((pos) => onOpenMenu(pos, item));
+
   return (
     <tr
       data-row-id={String(item.id)}
@@ -924,6 +958,10 @@ function ListRow({ item, columns, onOpenMenu, onOpenText, highlight }) {
         e.preventDefault();
         onOpenMenu({ x: e.clientX, y: e.clientY }, item);
       }}
+      onPointerDown={longPress.onPointerDown}
+      onPointerMove={longPress.onPointerMove}
+      onPointerUp={longPress.onPointerUp}
+      onPointerCancel={longPress.onPointerCancel}
       onMouseEnter={(e) => {
         if (!highlight) e.currentTarget.style.background = "#f8fafc";
       }}
@@ -952,6 +990,8 @@ function CompactListCard({ item, onOpenMenu, onOpenText, highlight }) {
       }
     : null;
 
+  const longPress = useLongPress((pos) => onOpenMenu(pos, item));
+
   return (
     <div
       data-row-id={String(item.id)}
@@ -967,6 +1007,10 @@ function CompactListCard({ item, onOpenMenu, onOpenText, highlight }) {
         e.preventDefault();
         onOpenMenu({ x: e.clientX, y: e.clientY }, item);
       }}
+      onPointerDown={longPress.onPointerDown}
+      onPointerMove={longPress.onPointerMove}
+      onPointerUp={longPress.onPointerUp}
+      onPointerCancel={longPress.onPointerCancel}
     >
       <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
         <div style={{ fontWeight: 950, color: "#0f172a" }}>
@@ -1053,6 +1097,38 @@ function CompactListCard({ item, onOpenMenu, onOpenText, highlight }) {
 // --------------------
 // Small UI elements
 // --------------------
+function ReportRow({ it, highlight, reportColumns, renderReportCell, openMenuReport }) {
+  const longPress = useLongPress((pos) => openMenuReport(pos, it));
+
+  return (
+    <tr
+      data-row-id={String(it.id)}
+      style={{
+        cursor: "context-menu",
+        ...(highlight
+          ? { background: "rgba(59,130,246,0.10)", outline: "2px solid rgba(59,130,246,0.35)", outlineOffset: -2 }
+          : null),
+      }}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        openMenuReport({ x: e.clientX, y: e.clientY }, it);
+      }}
+      onPointerDown={longPress.onPointerDown}
+      onPointerMove={longPress.onPointerMove}
+      onPointerUp={longPress.onPointerUp}
+      onPointerCancel={longPress.onPointerCancel}
+      onMouseEnter={(e) => {
+        if (!highlight) e.currentTarget.style.background = "#f8fafc";
+      }}
+      onMouseLeave={(e) => {
+        if (!highlight) e.currentTarget.style.background = "white";
+      }}
+    >
+      {reportColumns.map((k) => renderReportCell(it, k))}
+    </tr>
+  );
+}
+
 function Card({ title, subtitle, children }) {
   return (
     <div
@@ -2670,28 +2746,14 @@ export default function Inspections() {
                       filteredReports.map((it) => {
                         const highlight = highlightKind === "report" && String(highlightId) === String(it.id);
                         return (
-                          <tr
+                          <ReportRow
                             key={it.id}
-                            data-row-id={String(it.id)}
-                            style={{
-                              cursor: "context-menu",
-                              ...(highlight
-                                ? { background: "rgba(59,130,246,0.10)", outline: "2px solid rgba(59,130,246,0.35)", outlineOffset: -2 }
-                                : null),
-                            }}
-                            onContextMenu={(e) => {
-                              e.preventDefault();
-                              openMenuReport({ x: e.clientX, y: e.clientY }, it);
-                            }}
-                            onMouseEnter={(e) => {
-                              if (!highlight) e.currentTarget.style.background = "#f8fafc";
-                            }}
-                            onMouseLeave={(e) => {
-                              if (!highlight) e.currentTarget.style.background = "white";
-                            }}
-                          >
-                            {reportColumns.map((k) => renderReportCell(it, k))}
-                          </tr>
+                            it={it}
+                            highlight={highlight}
+                            reportColumns={reportColumns}
+                            renderReportCell={renderReportCell}
+                            openMenuReport={openMenuReport}
+                          />
                         );
                       })
                     )}
