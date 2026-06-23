@@ -157,6 +157,8 @@ export default function InspectionForm({ initial = {}, onCancel, onSave, saving,
           width: "100%",
           boxSizing: "border-box",
           minWidth: 0,
+          appearance: "none",
+          WebkitAppearance: "none",
         },
 
      textarea: {
@@ -202,10 +204,13 @@ export default function InspectionForm({ initial = {}, onCancel, onSave, saving,
 
     function autoGrow(el, maxPx = 260) {
       if (!el) return;
-      el.style.height = "auto";
-      const next = Math.min(el.scrollHeight, maxPx);
+      // Use "0" instead of "auto" — Safari/WebKit returns wrong scrollHeight
+      // when overflow is "hidden" and height is "auto", causing elements to overlap.
+      el.style.height = "0";
+      const natural = el.scrollHeight;
+      const next = Math.min(natural, maxPx);
       el.style.height = `${next}px`;
-      el.style.overflowY = el.scrollHeight > maxPx ? "auto" : "hidden";
+      el.style.overflowY = natural > maxPx ? "auto" : "hidden";
     }
 
   function autoGrowAll() {
