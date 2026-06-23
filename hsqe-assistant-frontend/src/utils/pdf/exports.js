@@ -233,28 +233,10 @@ function warnIfTooWideOnce(tableW, usableW) {
 }
 
 /**
- * If user selected all 3 long-text columns (description + corrective + preventive),
- * then export is considered "full report" -> no clamping.
- * Otherwise, clamp long-text fields to max 5 lines and add " …" at the end.
+ * Always export full text for all fields — no line clamping.
+ * The column width handles layout; truncation hides data the user needs.
  */
 function getMaxLinesForKey(key, columns) {
-  const cols = Array.isArray(columns) ? columns : [];
-  const hasAllThree =
-    cols.includes("description") &&
-    cols.includes("corrective_action") &&
-    cols.includes("preventive_action");
-
-  if (hasAllThree) return Infinity;
-
-  const longTextKeys = [
-    "description",
-    "corrective_action",
-    "preventive_action",
-    "notes",
-  ];
-
-  if (longTextKeys.includes(key)) return 5;
-
   return Infinity;
 }
 
