@@ -376,6 +376,26 @@ function _sumCounts(report) {
     Number(report?.other ?? 0)
   );
 }
+// Semantic comparator for vetting codes like "02.01", "7A.03", "9A.13", "15.09".
+// Codes with a letter suffix (7A, 8A, 9A) are treated as sitting just above their
+// numeric chapter (7A = 7.5), so the natural order is:
+//   02 → 03 → ... → 07 → 7A → 08 → 8A → 09 → 9A → 10 → 11 → ... → 17
+function _parseCode(code) {
+  const m = String(code || "").trim().match(/^(\d+)([A-Za-z]?)\.(.*)$/);
+  if (!m) return { chapterVal: 9999, sub: String(code || "") };
+  const chapterVal = parseInt(m[1], 10) + (m[2] ? 0.5 : 0);
+  const subNum = parseFloat(m[3]);
+  const sub = isNaN(subNum) ? m[3] : subNum;
+  return { chapterVal, sub };
+}
+function _cmpCodes(x, y) {
+  const px = _parseCode(x);
+  const py = _parseCode(y);
+  if (px.chapterVal !== py.chapterVal) return px.chapterVal - py.chapterVal;
+  if (typeof px.sub === "number" && typeof py.sub === "number") return px.sub - py.sub;
+  return String(px.sub).localeCompare(String(py.sub));
+}
+
 function applyInspectionSort(list, sort = {}) {
   const { key = "date", dir = "desc" } = sort;
   const d = dir === "asc" ? 1 : -1;
@@ -387,7 +407,7 @@ function applyInspectionSort(list, sort = {}) {
     if (key === "inspection_type") return d * _typeDisplay(a).localeCompare(_typeDisplay(b));
     if (key === "place") return d * cmp(a.place, b.place);
     if (key === "finding_type") return d * cmp(a.finding_type, b.finding_type);
-    if (key === "code") return d * cmp(a.code, b.code);
+    if (key === "code") return d * _cmpCodes(a.code, b.code);
     if (key === "detention") return d * (Number(Boolean(a.detention)) - Number(Boolean(b.detention)));
     if (key === "counts") return d * (_sumCounts(a) - _sumCounts(b));
     return d * cmp(a.date, b.date);
