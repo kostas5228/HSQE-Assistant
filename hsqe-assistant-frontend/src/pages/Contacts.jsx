@@ -832,6 +832,21 @@ export default function Directory() {
                   e.preventDefault();
                   openMenu({ x: e.clientX, y: e.clientY }, c);
                 }}
+                onPointerDown={(e) => {
+                  if (e.pointerType === "mouse") return;
+                  e._lpMoved = false;
+                  e._lpX = e.clientX; e._lpY = e.clientY;
+                  const el = e.currentTarget;
+                  el._lpTimer = setTimeout(() => {
+                    if (!e._lpMoved) openMenu({ x: e.clientX, y: e.clientY }, c);
+                  }, 520);
+                }}
+                onPointerMove={(e) => {
+                  if (Math.abs(e.clientX - e._lpX) > 8 || Math.abs(e.clientY - e._lpY) > 8)
+                    e._lpMoved = true;
+                }}
+                onPointerUp={(e) => { clearTimeout(e.currentTarget._lpTimer); }}
+                onPointerCancel={(e) => { clearTimeout(e.currentTarget._lpTimer); }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = "#f8fafc";
                 }}
@@ -888,6 +903,21 @@ export default function Directory() {
                   e.preventDefault();
                   openMenu({ x: e.clientX, y: e.clientY }, c);
                 }}
+                onPointerDown={(e) => {
+                  if (e.pointerType === "mouse") return;
+                  e._lpMoved = false;
+                  e._lpX = e.clientX; e._lpY = e.clientY;
+                  const el = e.currentTarget;
+                  el._lpTimer = setTimeout(() => {
+                    if (!e._lpMoved) openMenu({ x: e.clientX, y: e.clientY }, c);
+                  }, 520);
+                }}
+                onPointerMove={(e) => {
+                  if (Math.abs(e.clientX - e._lpX) > 8 || Math.abs(e.clientY - e._lpY) > 8)
+                    e._lpMoved = true;
+                }}
+                onPointerUp={(e) => { clearTimeout(e.currentTarget._lpTimer); }}
+                onPointerCancel={(e) => { clearTimeout(e.currentTarget._lpTimer); }}
               >
                 <div style={{ fontWeight: 950, fontSize: 18 }}>{c.full_name}</div>
                 <div style={{ color: "#64748b", marginTop: 6 }}>{c.short_id || ""}</div>
