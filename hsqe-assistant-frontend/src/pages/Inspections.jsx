@@ -2009,13 +2009,24 @@ export default function Inspections() {
         listInspectionsAll({ filters: listFilters, sort: listSort }),
       ]);
 
+      const listPxWidths = columns.map((k) => colWidth(k));
+      const listTotalPx = listPxWidths.reduce((s, w) => s + w, 0);
+      const listHasLongText = columns.some((k) =>
+        ["description", "corrective_action", "preventive_action", "notes"].includes(k)
+      );
+      // Long-text columns need landscape width (285mm = 297-12); otherwise portrait (198mm = 210-12).
+      const listUsableW = listHasLongText ? 285 : 198;
+      const listColWidths = listPxWidths.map((w) =>
+        Math.max(12, Math.round((w / listTotalPx) * listUsableW))
+      );
+
       exportFindingsListPdf({
         hasActiveFilters: listHasActiveFilters,
         allRows,
         filteredRows,
         columns,
         headerLabels: Object.fromEntries(columns.map((k) => [k, headerLabel(k)])),
-        colWidthsMM: columns.map((k) => Math.max(12, Math.round(colWidth(k) * 0.264))),
+        colWidthsMM: listColWidths,
         getCellText: getFindingCellText,
       });
       return;
@@ -2028,13 +2039,23 @@ export default function Inspections() {
         listInspectionReportsAll({ filters: reportsFilters, sort: reportsSort }),
       ]);
 
+      const rptPxWidths = reportColumns.map((k) => reportColWidth(k));
+      const rptTotalPx = rptPxWidths.reduce((s, w) => s + w, 0);
+      const rptHasLongText = reportColumns.some((k) =>
+        ["notes", "counts"].includes(k)
+      );
+      const rptUsableW = rptHasLongText ? 285 : 198;
+      const rptColWidths = rptPxWidths.map((w) =>
+        Math.max(12, Math.round((w / rptTotalPx) * rptUsableW))
+      );
+
       exportInspectionReportsPdf({
         hasActiveFilters: reportsHasActiveFilters,
         allRows,
         filteredRows,
         columns: reportColumns,
         headerLabels: Object.fromEntries(reportColumns.map((k) => [k, reportHeaderLabel(k)])),
-        colWidthsMM: reportColumns.map((k) => Math.max(12, Math.round(reportColWidth(k) * 0.264))),
+        colWidthsMM: rptColWidths,
         getCellText: getReportCellText,
       });
       return;
