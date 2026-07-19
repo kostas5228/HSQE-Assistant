@@ -90,6 +90,7 @@ export const mockSettings = {
     "Tokyo MoU",
     "USCG",
     "Viña del Mar MoU",
+    "Other",
   ],
 
   findingTypes: ["Deficiency", "Observation", "Recommendation", "Finding"],
