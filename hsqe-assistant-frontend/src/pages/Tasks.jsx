@@ -1474,10 +1474,7 @@ React.useEffect(() => {
 
   function toggleComplete(t) {
     const nextStatus = t.status === "Completed" ? "Open" : "Completed";
-    // Send the full task merged with the change, not just { status }.
-    // The backend replaces the whole record on update, so sending only the
-    // changed field would silently wipe out notes/steps/vessels/etc.
-    updateMut.mutate({ id: t.id, input: { ...t, status: nextStatus } });
+    updateMut.mutate({ id: t.id, input: { status: nextStatus } });
   }
 
   function openMenuAt(x, y, task) {
@@ -1528,9 +1525,7 @@ React.useEffect(() => {
   function toggleStep(task, stepId, nextDone) {
     const steps = Array.isArray(task.steps) ? task.steps : [];
     const nextSteps = steps.map((s) => (s.id === stepId ? { ...s, done: nextDone } : s));
-    // Merge with the full task so other fields (notes, title, vessels, etc.)
-    // aren't wiped out by the backend's full-replace update.
-    updateMut.mutate({ id: task.id, input: { ...task, steps: nextSteps } });
+    updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
 
     setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
@@ -1538,8 +1533,7 @@ React.useEffect(() => {
   function updateStepText(task, stepId, nextText) {
     const steps = Array.isArray(task.steps) ? task.steps : [];
     const nextSteps = steps.map((s) => (s.id === stepId ? { ...s, text: nextText } : s));
-    // Merge with the full task so other fields aren't wiped out.
-    updateMut.mutate({ id: task.id, input: { ...task, steps: nextSteps } });
+    updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
 
     setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
@@ -1549,8 +1543,7 @@ React.useEffect(() => {
     const sorted = steps.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     const nextSteps = reorderStepsByIndex(sorted, fromIndex, toIndex);
 
-    // Merge with the full task so other fields aren't wiped out.
-    updateMut.mutate({ id: task.id, input: { ...task, steps: nextSteps } });
+    updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
     setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
 
@@ -1564,8 +1557,7 @@ React.useEffect(() => {
       order: maxOrder + 1,
     };
     const nextSteps = [...steps, next];
-    // Merge with the full task so other fields aren't wiped out.
-    updateMut.mutate({ id: task.id, input: { ...task, steps: nextSteps } });
+    updateMut.mutate({ id: task.id, input: { steps: nextSteps } });
 
     setOpenStepsTask((prev) => (prev?.id === task.id ? { ...prev, steps: nextSteps } : prev));
   }
@@ -1958,9 +1950,7 @@ React.useEffect(() => {
               onAddStep={(text) => addStep(openStepsTask, text)}
               onUpdateStepText={(stepId, text) => updateStepText(openStepsTask, stepId, text)}
               onReorder={(fromIdx, toIdx) => reorderSteps(openStepsTask, fromIdx, toIdx)}
-              onUpdateNotes={(text) =>
-                updateMut.mutate({ id: openStepsTask.id, input: { ...openStepsTask, notes: text } })
-              }
+              onUpdateNotes={(text) => updateMut.mutate({ id: openStepsTask.id, input: { notes: text } })}
             />              
           </Modal>
         ) : null}
