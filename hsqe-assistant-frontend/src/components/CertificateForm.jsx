@@ -121,6 +121,16 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
     notes: initial.notes || "",
   });
 
+  // If the certificate's saved type isn't (or is no longer) in the global
+  // Settings list, still show it as an option so the field never appears
+  // blank on edit and the value can't be silently wiped out on save.
+  const typeOptionsWithCurrent = React.useMemo(() => {
+    if (form.type && !certTypeOptions.includes(form.type)) {
+      return [form.type, ...certTypeOptions];
+    }
+    return certTypeOptions;
+  }, [certTypeOptions, form.type]);
+
   const notesRef = React.useRef(null);
 
   function setField(key, value) {
@@ -196,7 +206,7 @@ export default function CertificateForm({ initial = {}, onCancel, onSave, saving
 
               <select value={form.type} onChange={(e) => setField("type", e.target.value)} style={ui.select} required>
                 <option value="">Select type</option>
-                {certTypeOptions.map((t) => (
+                {typeOptionsWithCurrent.map((t) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
