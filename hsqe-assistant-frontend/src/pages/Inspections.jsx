@@ -1723,9 +1723,9 @@ export default function Inspections() {
 
   function reportColWidth(key) {
     const map = {
-      date: 110,
+      date: 140,
       vessel: 140,
-      inspection_type: 170,
+      inspection_type: 140,
       place: 170,
       detention: 70,
       counts: 180,
