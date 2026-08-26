@@ -1690,9 +1690,9 @@ export default function Inspections() {
 
   function colWidth(key) {
     const map = {
-      date: 110,
+      date: 90,
       vessel: 120,
-      inspection_type: 170,
+      inspection_type: 190,
       place: 170,
       finding_type: 150,
       code: 70,
@@ -1723,9 +1723,9 @@ export default function Inspections() {
 
   function reportColWidth(key) {
     const map = {
-      date: 140,
+      date: 90,
       vessel: 140,
-      inspection_type: 140,
+      inspection_type: 190,
       place: 170,
       detention: 70,
       counts: 180,
@@ -2418,13 +2418,7 @@ export default function Inspections() {
                   <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
                     <colgroup>
                       {columns.map((k) => (
-                        <col
-                          key={k}
-                          style={{
-                            width: colWidth(k),
-                            ...(k === "date" ? { minWidth: 110 } : null),
-                          }}
-                        />
+                        <col key={k} style={{ width: colWidth(k) }} />
                       ))}
                     </colgroup>
 
@@ -2715,13 +2709,7 @@ export default function Inspections() {
                 <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
                   <colgroup>
                     {reportColumns.map((k) => (
-                      <col
-                        key={k}
-                        style={{
-                          width: reportColWidth(k),
-                          ...(k === "date" ? { minWidth: 110 } : null),
-                        }}
-                      />
+                      <col key={k} style={{ width: reportColWidth(k) }} />
                     ))}
                   </colgroup>
 
