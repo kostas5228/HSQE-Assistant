@@ -1690,7 +1690,7 @@ export default function Inspections() {
 
   function colWidth(key) {
     const map = {
-      date: 90,
+      date: 100,
       vessel: 120,
       inspection_type: 190,
       place: 170,
