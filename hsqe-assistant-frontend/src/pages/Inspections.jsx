@@ -2418,7 +2418,13 @@ export default function Inspections() {
                   <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
                     <colgroup>
                       {columns.map((k) => (
-                        <col key={k} style={{ width: colWidth(k) }} />
+                        <col
+                          key={k}
+                          style={{
+                            width: colWidth(k),
+                            ...(k === "date" ? { minWidth: 110 } : null),
+                          }}
+                        />
                       ))}
                     </colgroup>
 
@@ -2709,7 +2715,13 @@ export default function Inspections() {
                 <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
                   <colgroup>
                     {reportColumns.map((k) => (
-                      <col key={k} style={{ width: reportColWidth(k) }} />
+                      <col
+                        key={k}
+                        style={{
+                          width: reportColWidth(k),
+                          ...(k === "date" ? { minWidth: 110 } : null),
+                        }}
+                      />
                     ))}
                   </colgroup>
 
