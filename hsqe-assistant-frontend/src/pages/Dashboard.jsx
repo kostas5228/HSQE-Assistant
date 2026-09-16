@@ -1241,9 +1241,11 @@ export default function Dashboard() {
   const recentFindings = React.useMemo(() => {
   const out = [...inspections];
   out.sort((a, b) => {
-    const A = String(pickInspectionDate(a) || a.date || "");
-    const B = String(pickInspectionDate(b) || b.date || "");
-    return recentFindingsNewestFirst ? B.localeCompare(A) : A.localeCompare(B);
+    const dA = pickInspectionDate(a);
+    const dB = pickInspectionDate(b);
+    const A = dA ? dA.getTime() : 0;
+    const B = dB ? dB.getTime() : 0;
+    return recentFindingsNewestFirst ? B - A : A - B;
   });
   return out; // trim in UI
 }, [inspections, recentFindingsNewestFirst]);
